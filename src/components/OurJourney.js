@@ -991,19 +991,20 @@
 
 
 
-
-
 "use client";
-
 import { useState, useRef, useEffect, useMemo } from "react";
 import Image from "next/image";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ShieldCheck, Truck, Package } from "lucide-react";
 
 /** tiny classnames helper */
 function cx(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-/** White milk droplet (no outer circle) */
+/**
+ * CUSTOM SVG ICON: The Milk Droplet
+ */
 function MilkDroplet({ size = 36 }) {
   return (
     <svg
@@ -1011,10 +1012,9 @@ function MilkDroplet({ size = 36 }) {
       width={size}
       height={size}
       aria-hidden="true"
-      style={{ filter: "drop-shadow(0 4px 12px rgba(0,0,0,.15))" }}
+      style={{ filter: "drop-shadow(0 4px 8px rgba(0, 0, 0, 0.12))" }}
     >
       <defs>
-        {/* subtle depth so it doesn’t vanish on white backgrounds */}
         <linearGradient id="milkDropGrad" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#FFFFFF" />
           <stop offset="100%" stopColor="#F8FAFC" />
@@ -1024,19 +1024,122 @@ function MilkDroplet({ size = 36 }) {
         d="M12 2c-3.2 4.5-6 8-6 11 0 3.3 2.7 6 6 6s6-2.7 6-6c0-3-2.8-6.5-6-11z"
         fill="url(#milkDropGrad)"
         stroke="#CBD5E1"
-        strokeWidth="0.8"
+        strokeWidth="1"
       />
     </svg>
   );
 }
 
-export default function OurJourney() {
-  const [progress, setProgress] = useState(0); // 0..1 scroll progress of the section
-  const [activeIndex, setActiveIndex] = useState(0);
-  const containerRef = useRef(null);
-  const stageRefs = useRef([]);
+/**
+ * CUSTOM SVG ICON: A bottle with a filling animation
+ */
+function FillingBottleIcon({ size = 24 }) {
+  const bottlePath =
+    "M9.5 2h5a1.5 1.5 0 011.5 1.5V6h-8V3.5A1.5 1.5 0 019.5 2zM8 7h8v12a2 2 0 01-2 2H10a2 2 0 01-2-2V7z";
 
-  // --- Content (update images/points as needed) ---
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <defs>
+        <clipPath id="bottleClip">
+          <path d={bottlePath} />
+        </clipPath>
+      </defs>
+      <motion.rect
+        x="8"
+        width="8"
+        height="14"
+        fill="#FBBF24"
+        clipPath="url(#bottleClip)"
+        initial={{ y: "100%" }}
+        animate={{ y: ["100%", "30%", "100%"] }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "easeInOut",
+          repeatDelay: 0.5,
+        }}
+      />
+      <path
+        d={bottlePath}
+        stroke="#FBBF24"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+/**
+ * The dynamic marker for the timeline that changes based on the active stage.
+ */
+function TimelineMarker({ activeIndex }) {
+  const markerSize = 40;
+  const STAGES = [
+    {
+      Icon: MilkDroplet,
+      props: { size: 30 },
+      animation: {
+        y: [0, -2, 0],
+        transition: { duration: 2.5, repeat: Infinity, ease: "easeInOut" },
+      },
+    },
+    {
+      Icon: ShieldCheck,
+      props: { size: 20, strokeWidth: 2.5 },
+      animation: {
+        scale: [1, 1.1, 1],
+        transition: { duration: 2.5, repeat: Infinity, ease: "easeInOut" },
+      },
+    },
+    { Icon: Truck, props: { size: 20, strokeWidth: 2.5 }, animation: {} },
+    {
+      Icon: FillingBottleIcon,
+      props: { size: 24 },
+      animation: { scale: 1 },
+    },
+    {
+      Icon: Package,
+      props: { size: 20, strokeWidth: 2.5 },
+      animation: {
+        y: [0, -2, 0],
+        transition: { duration: 2.5, repeat: Infinity, ease: "easeInOut" },
+      },
+    },
+  ];
+
+  return (
+    <div
+      className="relative flex items-center justify-center rounded-full bg-white shadow-lg"
+      style={{
+        width: markerSize,
+        height: markerSize,
+        border: "2px solid #FBBF24",
+      }}
+    >
+      {STAGES.map(({ Icon, props, animation }, index) => (
+        <motion.div
+          key={index}
+          className="absolute text-amber-600 flex items-center justify-center"
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{
+            opacity: activeIndex === index ? 1 : 0,
+            scale: activeIndex === index ? 1 : 0.5,
+          }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+        >
+          <motion.div animate={animation}>
+            <Icon {...props} />
+          </motion.div>
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
+export default function OurJourney() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
   const stages = useMemo(
     () => [
       {
@@ -1088,36 +1191,31 @@ export default function OurJourney() {
     []
   );
 
-  // --- Scroll progress + active stage ---
+  const scrollContainerRef = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: scrollContainerRef,
+    // --- CHANGED ---
+    offset: ["start center", "end end"], // Changed "end center" to "end end" to fix final step timing
+    // --- END CHANGE ---
+  });
+
   useEffect(() => {
-    function handleScroll() {
-      const el = containerRef.current;
-      if (!el) return;
-
-      const rect = el.getBoundingClientRect();
-      const viewportH = window.innerHeight;
-      const total = el.offsetHeight - viewportH;
-
-      const startY = window.scrollY + rect.top;
-      const scrolled = window.scrollY - startY;
-      const p = Math.max(0, Math.min(1, total > 0 ? scrolled / total : 0));
-      setProgress(p);
-
-      // which stage is closest to center?
-      let current = 0;
-      for (let i = 0; i < stageRefs.current.length; i++) {
-        const node = stageRefs.current[i];
-        if (!node) continue;
-        const r = node.getBoundingClientRect();
-        if (r.top < viewportH * 0.45) current = i;
+    return scrollYProgress.on("change", (latest) => {
+      const numStages = stages.length;
+      // Added a small buffer to ensure the last item is reliably selected when scrollYProgress is 1
+      const newIndex = Math.min(Math.floor(latest * numStages), numStages - 1);
+      if (latest === 1) {
+        setActiveIndex(numStages - 1);
+      } else {
+        setActiveIndex(newIndex);
       }
-      setActiveIndex(current);
-    }
+    });
+  }, [scrollYProgress, stages.length]);
+  
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const progressHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  const markerTop = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
     <section className="bg-stone-50 py-20 md:py-28">
@@ -1131,39 +1229,30 @@ export default function OurJourney() {
             quality-assured, and delivered chilled every day.
           </p>
         </div>
-
-        <div ref={containerRef} className="relative">
-          {/* Sticky center line + progress + WHITE droplet marker */}
+        <div className="relative">
           <div className="pointer-events-none absolute left-1/2 top-0 bottom-0 -translate-x-1/2 w-1">
             <div className="sticky top-0 h-screen">
               <div className="relative h-full w-full">
-                {/* base track */}
                 <div className="absolute top-0 bottom-0 w-full rounded-full bg-slate-200" />
-                {/* progress track (brand accent; adjust if needed) */}
-                <div
+                <motion.div
                   className="absolute top-0 w-full rounded-full bg-amber-500"
-                  style={{ height: `${progress * 100}%` }}
+                  style={{ height: progressHeight }}
                 />
-                {/* droplet marker */}
-                <div
-                  className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2"
-                  style={{ top: `${progress * 100}%` }}
+                <motion.div
+                  className="absolute left-1/2 -translate-x-1/2"
+                  style={{ top: markerTop, y: "-50%" }}
                 >
-                  <MilkDroplet size={38} />
-                </div>
+                  <TimelineMarker activeIndex={activeIndex} />
+                </motion.div>
               </div>
             </div>
           </div>
-
-          {/* Stages */}
-          <div className="space-y-24">
+          <div ref={scrollContainerRef} className="space-y-24">
             {stages.map((stage, i) => (
               <div
                 key={stage.index}
-                ref={(el) => (stageRefs.current[i] = el)}
                 className="relative grid items-center grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-16"
               >
-                {/* Image */}
                 <div
                   className={cx(
                     "group relative overflow-hidden rounded-2xl ring-1 ring-slate-200 shadow-sm bg-white",
@@ -1178,8 +1267,6 @@ export default function OurJourney() {
                     className="h-full w-full object-cover"
                   />
                 </div>
-
-                {/* Copy */}
                 <div>
                   <div className="flex items-center gap-4">
                     <span
@@ -1208,7 +1295,6 @@ export default function OurJourney() {
               </div>
             ))}
           </div>
-          {/* /Stages */}
         </div>
       </div>
     </section>

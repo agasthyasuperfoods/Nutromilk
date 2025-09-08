@@ -8,11 +8,11 @@ import {
   FlaskConical,
   Timer,
   Truck,
-  PauseCircle,
   WalletCards,
   Milk,
   Leaf,
 } from "lucide-react";
+import { motion } from "framer-motion";
 
 /**
  * Assets needed
@@ -22,181 +22,182 @@ import {
  * <MilkValueShowcase />
  */
 
+// Animation variants for Framer Motion
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  show: { y: 0, opacity: 1, transition: { duration: 0.5, ease: "easeOut" } },
+};
+
+const phoneVariants = {
+  hidden: { scale: 0.9, opacity: 0 },
+  show: { scale: 1, opacity: 1, transition: { duration: 0.5, ease: "easeOut" } },
+};
+
 export default function MilkValueShowcase() {
   return (
-    <section
-      className="relative overflow-hidden"
-      style={{
-        // brand tokens
-        ["--nv"]: "#0F1D3D", // brand navy
-        ["--am"]: "#FFB100", // brand amber
-        ["--cr"]: "#FFF6E5", // brand cream
-        ["--ink"]: "rgba(15,29,61,0.76)", // ink-ish
-      }}
-    >
-      {/* Cream backdrop wash */}
-      <div
-        className="absolute inset-0 -z-10"
+    <>
+      {/* We define the custom animation styles here using Styled-JSX, which is built into Next.js */}
+      <style jsx>{`
+        .halo-pulse {
+          animation: subtle-pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes subtle-pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.7; }
+        }
+      `}</style>
+    
+      <section
+        className="relative flex min-h-screen items-center overflow-hidden"
         style={{
-          background:
-            "radial-gradient(1200px 600px at 50% -80px, rgba(255,177,0,0.15) 0%, rgba(255,246,229,0.85) 35%, #FFFFFF 70%)",
+          // brand tokens
+          ["--nv"]: "#0F1D3D",
+          ["--am"]: "#FFB100",
+          ["--cr"]: "#FFF6E5",
+          ["--ink"]: "rgba(15,29,61,0.76)",
         }}
-      />
+      >
+        {/* Cream backdrop wash */}
+        <div
+          className="absolute inset-0 -z-10"
+          style={{
+            background:
+              "radial-gradient(1200px 600px at 50% -80px, rgba(255,177,0,0.15) 0%, rgba(255,246,229,0.85) 35%, #FFFFFF 70%)",
+          }}
+        />
 
-      <div className="mx-auto max-w-7xl px-6 pt-20 pb-10 lg:pt-28 lg:pb-20">
-        {/* Heading */}
-        <div className="mx-auto max-w-3xl text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold tracking-wide"
-            style={{ color: "var(--nv)", borderColor: "rgba(15,29,61,0.15)", background: "var(--cr)" }}>
-            <Milk className="h-4 w-4" /> 100% Milk. Nothing else.
-          </span>
-          <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-5xl"
-              style={{ color: "var(--nv)" }}>
-            Farm-fresh milk, <span style={{ color: "var(--am)" }}>delivered before sunrise</span>
-          </h2>
-          <p className="mt-4 text-lg" style={{ color: "var(--ink)" }}>
-            We’ve re-imagined your daily milk: traceable farms, cold-chain integrity, and a
-            delightful app experience—all tuned for reliability every single morning.
-          </p>
-        </div>
+        <motion.div
+          className="mx-auto w-full max-w-7xl px-4 py-8 text-center"
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+        >
+          {/* Heading */}
+          <motion.h2
+            className="text-3xl font-extrabold tracking-tight sm:text-4xl"
+            style={{ color: "var(--nv)" }}
+            variants={itemVariants}
+          >
+            Farm-fresh milk,{" "}
+            <span
+              className="bg-gradient-to-r from-amber-500 to-amber-400 bg-clip-text text-transparent"
+            >
+              delivered before sunrise
+            </span>
+          </motion.h2>
+          <motion.p className="mt-2 text-base" style={{ color: "var(--ink)" }} variants={itemVariants}>
+            We’ve re-imagined your daily milk: traceable farms, cold-chain integrity, and a delightful
+            app experience.
+          </motion.p>
 
-        {/* Metric ribbon */}
-        <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <Metric label="Cold-chain ≤ 4°C" Icon={ThermometerSnowflake} />
-          <Metric label="Delivered by 6:30 AM" Icon={Timer} />
-          <Metric label="Zero preservatives" Icon={ShieldCheck} />
-          <Metric label="Batch tested daily" Icon={FlaskConical} />
-        </div>
+          {/* Metric ribbon */}
+          <motion.div
+            className="mt-6 grid grid-cols-2 gap-2 sm:grid-cols-4"
+            variants={itemVariants}
+          >
+            <Metric label="Cold-chain ≤ 4°C" Icon={ThermometerSnowflake} />
+            <Metric label="Delivered by 6:30 AM" Icon={Timer} />
+            <Metric label="Zero preservatives" Icon={ShieldCheck} />
+            <Metric label="Batch tested daily" Icon={FlaskConical} />
+          </motion.div>
 
-        {/* Main layout */}
-        <div className="relative mt-12 grid grid-cols-1 items-center gap-8 lg:mt-16 lg:grid-cols-3">
-          {/* Left stack */}
-          <div className="order-2 space-y-6 lg:order-1">
-            <Card
-              Icon={Droplet}
-              title="Single-source milk"
-              copy="Sourced from partner farms with consistent feed & care. No mixing across origins."
-            />
-            <Card
-              Icon={Leaf}
-              title="Naturally rich"
-              copy="Full-bodied taste—perfect for tea, coffee, and your morning glass."
-            />
-            <Card
-              Icon={PauseCircle}
-              title="Pause / skip anytime"
-              copy="Travel plans? Pause instantly and resume when you’re back."
-            />
-          </div>
-
-          {/* Center phone */}
-          <div className="order-1 mx-auto w-full lg:order-2">
-            <div className="relative mx-auto h-[560px] w-[280px] sm:h-[640px] sm:w-[320px]">
-              {/* halo */}
-              <div
-                className="absolute -inset-10 rounded-[999px] blur-2xl"
-                style={{
-                  background:
-                    "radial-gradient(70% 60% at 50% 35%, rgba(255,177,0,0.35) 0%, rgba(255,246,229,0.7) 40%, rgba(15,29,61,0.07) 100%)",
-                }}
+          {/* Main layout */}
+          <div className="relative mt-8 grid grid-cols-1 items-center gap-4 lg:grid-cols-3">
+            {/* Left stack */}
+            <motion.div className="order-2 space-y-3 lg:order-1" variants={itemVariants}>
+              <Card
+                Icon={Droplet}
+                title="Single-source milk"
+                copy="Sourced from partner farms with consistent feed & care."
               />
-              {/* phone */}
-              <div
-                className="relative z-10 h-full w-full rounded-[2.2rem] shadow-2xl"
-                style={{
-                  backgroundColor: "#ffffff",
-                  border: "1px solid rgba(15,29,61,0.12)",
-                }}
-              >
+              <Card
+                Icon={Leaf}
+                title="Naturally rich"
+                copy="Full-bodied taste—perfect for tea, coffee, and more."
+              />
+            </motion.div>
+
+            {/* Center phone */}
+            <motion.div className="order-1 mx-auto w-full lg:order-2" variants={phoneVariants}>
+              <div className="relative mx-auto h-[400px] w-[200px] sm:h-[480px] sm:w-[240px]">
+                {/* halo */}
                 <div
-                  className="absolute left-1/2 top-2 z-20 h-1.5 w-16 -translate-x-1/2 rounded-full"
-                  style={{ backgroundColor: "rgba(15,29,61,0.18)" }}
+                  className="halo-pulse absolute -inset-8 rounded-[999px] blur-xl"
+                  style={{
+                    background:
+                      "radial-gradient(70% 60% at 50% 35%, rgba(255,177,0,0.35) 0%, rgba(255,246,229,0.7) 40%, rgba(15,29,61,0.07) 100%)",
+                  }}
                 />
-                <div className="absolute inset-0 overflow-hidden rounded-[2.2rem]">
-                  <Image
-                    src="/mock.png"
-                    alt="Agasthya Nutro Milk app—subscribe, manage, and track deliveries"
-                    fill
-                    sizes="(min-width:1024px) 320px, 280px"
-                    className="object-cover"
-                    priority
+                {/* phone */}
+                <div
+                  className="relative z-10 h-full w-full rounded-[1.8rem] shadow-2xl"
+                  style={{
+                    backgroundColor: "#ffffff",
+                    border: "1px solid rgba(15,29,61,0.12)",
+                  }}
+                >
+                  <div
+                    className="absolute left-1/2 top-1.5 z-20 h-1 w-12 -translate-x-1/2 rounded-full"
+                    style={{ backgroundColor: "rgba(15,29,61,0.18)" }}
                   />
+                  <div className="absolute inset-0 overflow-hidden rounded-[1.8rem]">
+                    <Image
+                      src="/mock.png"
+                      alt="Agasthya Nutro Milk app—subscribe, manage, and track deliveries"
+                      fill
+                      sizes="(min-width:1024px) 240px, 200px"
+                      className="object-cover"
+                      priority
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
+
+            {/* Right stack */}
+            <motion.div className="order-3 space-y-3" variants={itemVariants}>
+              <Card
+                Icon={Truck}
+                title="Doorstep by morning"
+                copy="Optimized micro-routes bring your milk fresh and fast."
+              />
+              <Card
+                Icon={WalletCards}
+                title="UPI & autopay"
+                copy="Set & forget. Flexible billing with reminders and retries."
+              />
+            </motion.div>
           </div>
+        </motion.div>
 
-          {/* Right stack */}
-          <div className="order-3 space-y-6">
-            <Card
-              Icon={Truck}
-              title="Doorstep by morning"
-              copy="Optimized micro-routes bring your milk fresh and fast—like clockwork."
-            />
-            <Card
-              Icon={WalletCards}
-              title="UPI & autopay"
-              copy="Set & forget. Flexible billing with reminders and smart retries."
-            />
-            <Card
-              Icon={ShieldCheck}
-              title="Every batch verified"
-              copy="Quality checks and temperature logs on every hop in the journey."
-            />
-          </div>
-        </div>
-
-        {/* How it works */}
-        <div className="mt-16 lg:mt-20">
-          <h3 className="text-center text-xl font-bold" style={{ color: "var(--nv)" }}>
-            How your milk reaches you
-          </h3>
-          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <Step index="01" title="Milked at dawn" copy="Collected at partner farms in the early hours for peak freshness." />
-            <Step index="02" title="Chilled & tested" copy="Rapid chilling ≤ 4°C and routine batch tests to ensure quality." />
-            <Step index="03" title="Delivered before sunrise" copy="Routed to your doorstep—fresh, cold, and right on time." />
-          </div>
-        </div>
-
-        {/* CTA */}
-        <div className="mt-14 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <a
-            href="#download"
-            className="inline-flex items-center justify-center rounded-xl px-6 py-3 text-sm font-semibold text-white shadow"
-            style={{ backgroundColor: "var(--am)" }}
-          >
-            Get the app
-          </a>
-          <a
-            href="#subscribe"
-            className="inline-flex items-center justify-center rounded-xl border px-6 py-3 text-sm font-semibold"
-            style={{
-              color: "var(--nv)",
-              borderColor: "rgba(15,29,61,0.15)",
-              backgroundColor: "#fff",
-            }}
-          >
-            Start a subscription
-          </a>
-        </div>
-      </div>
-
-      {/* Decorative orbit (desktop) */}
-      <svg
-        className="pointer-events-none absolute -top-24 left-1/2 hidden h-[720px] w-[720px] -translate-x-1/2 lg:block"
-        viewBox="0 0 200 200"
-        fill="none"
-      >
-        <circle
-          cx="100"
-          cy="100"
-          r="96"
-          stroke="rgba(15,29,61,0.18)"
-          strokeWidth="0.6"
-          strokeDasharray="2 4"
-        />
-      </svg>
-    </section>
+        {/* Decorative orbit (desktop) */}
+        <svg
+          className="pointer-events-none absolute -top-16 left-1/2 hidden h-[600px] w-[600px] -translate-x-1/2 lg:block"
+          viewBox="0 0 200 200"
+          fill="none"
+        >
+          <circle
+            cx="100"
+            cy="100"
+            r="96"
+            stroke="rgba(15,29,61,0.18)"
+            strokeWidth="0.6"
+            strokeDasharray="2 4"
+          />
+        </svg>
+      </section>
+    </>
   );
 }
 
@@ -205,58 +206,44 @@ export default function MilkValueShowcase() {
 function Metric({ label, Icon }) {
   return (
     <div
-      className="flex items-center gap-2 rounded-xl border px-3 py-2 text-sm font-semibold"
-      style={{ borderColor: "rgba(15,29,61,0.12)", background: "var(--cr)", color: "var(--nv)" }}
+      className="flex items-center justify-center gap-2 rounded-lg border px-3 py-1.5 text-xs font-semibold"
+      style={{
+        borderColor: "rgba(15,29,61,0.12)",
+        background: "var(--cr)",
+        color: "var(--nv)",
+      }}
     >
       <Icon className="h-4 w-4" />
-      {label}
+      <span>{label}</span>
     </div>
   );
 }
 
 function Card({ Icon, title, copy }) {
   return (
-    <div
-      className="rounded-2xl p-5 shadow-sm transition-all hover:shadow-md"
+    <motion.div
+      className="rounded-xl p-3 text-left shadow-sm"
       style={{
         background: "#fff",
         border: "1px solid rgba(15,29,61,0.08)",
       }}
+      whileHover={{ y: -5, scale: 1.03, boxShadow: "0px 10px 20px rgba(15, 29, 61, 0.1)" }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
     >
       <div
-        className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl"
+        className="mb-2 inline-flex h-8 w-8 items-center justify-center rounded-lg"
         style={{
-          background: "var(--cr)",
-          border: "1px solid rgba(15,29,61,0.12)",
+          background: "linear-gradient(145deg, var(--cr), #ffffff)",
+          border: "1px solid rgba(15,29,61,0.08)",
           color: "var(--nv)",
         }}
       >
-        <Icon className="h-5 w-5" />
+        <Icon className="h-4 w-4" />
       </div>
-      <h4 className="text-lg font-semibold" style={{ color: "var(--nv)" }}>
+      <h4 className="text-base font-semibold" style={{ color: "var(--nv)" }}>
         {title}
       </h4>
-      <p className="mt-1 text-slate-600">{copy}</p>
-    </div>
-  );
-}
-
-function Step({ index, title, copy }) {
-  return (
-    <div
-      className="rounded-2xl p-5"
-      style={{ background: "#fff", border: "1px solid rgba(15,29,61,0.08)" }}
-    >
-      <span
-        className="inline-flex rounded-lg px-2 py-0.5 text-xs font-bold"
-        style={{ background: "var(--cr)", color: "var(--nv)", border: "1px solid rgba(15,29,61,0.12)" }}
-      >
-        {index}
-      </span>
-      <h5 className="mt-2 text-base font-semibold" style={{ color: "var(--nv)" }}>
-        {title}
-      </h5>
-      <p className="mt-1 text-sm text-slate-600">{copy}</p>
-    </div>
+      <p className="mt-0.5 text-sm text-slate-600">{copy}</p>
+    </motion.div>
   );
 }

@@ -27,8 +27,8 @@ const pillars = [
 
 export default function WhatWeStandFor() {
   return (
-    // CHANGED: Adjusted vertical padding to be consistent with other sections
-    <section className="bg-stone-50 py-16 md:py-24">
+    // --- CHANGED: Switched background to white for consistency ---
+    <section className="bg-white py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900">
@@ -56,7 +56,8 @@ export default function WhatWeStandFor() {
 
 function Pillar({ icon, title, desc }) {
   return (
-    <div className="group rounded-2xl bg-white p-7 text-center transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
+    // --- CHANGED: Added ring and shadow so cards are visible on the new white background ---
+    <div className="group rounded-2xl bg-white p-7 text-center ring-1 ring-slate-200/80 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
       <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-amber-100 transition-all duration-300 group-hover:bg-amber-500">
         <div className="transition-transform duration-300 group-hover:scale-110 group-hover:[&>svg]:text-white">
           {icon}
