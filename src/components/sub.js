@@ -7,7 +7,8 @@ const plansData = [
     description: "The foundation of a healthy home. Pure, creamy buffalo milk for your daily chai, coffee, and breakfast bowls.",
     price: 499,
     features: ["30 Liters of Fresh Milk", "Silent, Daily Morning Delivery", "Pause or Resume Anytime"],
-    perfectFor: "Families who can't start their day without pure, fresh milk."
+    // --- FIX: Replaced "can't" with "can&apos;t"
+    perfectFor: "Families who can&apos;t start their day without pure, fresh milk."
   },
   {
     name: "The Protein Pack",
@@ -17,7 +18,8 @@ const plansData = [
     perfectFor: "Health enthusiasts and anyone needing quick, nutritious meals."
   },
   {
-    name: "The Dairy Lover's Combo",
+    // --- FIX: Replaced "Lover's" with "Lover&apos;s"
+    name: "The Dairy Lover&apos;s Combo",
     description: "Go beyond milk. Indulge in a complete dairy experience with soft, fresh paneer for your curries and golden, aromatic ghee.",
     price: 799,
     features: ["30 Liters of Fresh Milk", "500g Fresh Paneer Delivered Weekly", "500ml Pure Ghee Delivered Monthly", "Exclusive Member-Only Discounts"],
@@ -67,7 +69,7 @@ export default function SubscriptionPage() {
       </Head>
 
       <div className="bg-white">
-        {/* Section 1: Hero (This section is untouched) */}
+        {/* Section 1: Hero */}
         <header className="relative">
             <div className="absolute inset-0 bg-black opacity-50 z-10"></div>
             <div
@@ -87,10 +89,11 @@ export default function SubscriptionPage() {
         </header>
 
         <main>
-          {/* Section 2: Why You'll Love Us (This section is untouched) */}
+          {/* Section 2: Why You'll Love Us */}
           <section className="py-16 sm:py-20">
             <div className="max-w-6xl mx-auto px-4 text-center">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-12">Why You'll Love Us</h2>
+              {/* --- FIX: Replaced "You'll" with "You&apos;ll" --- */}
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-12">Why You&apos;ll Love Us</h2>
               <div className="grid md:grid-cols-3 gap-8">
                 <div className="feature-item bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300">
                   <FreshnessIcon />
@@ -111,13 +114,13 @@ export default function SubscriptionPage() {
             </div>
           </section>
 
-          {/* Section 3: Choose Your Plan (Changes are only in this section) */}
+          {/* Section 3: Choose Your Plan */}
           <section id="plans" className="py-16 sm:py-20">
             <div className="max-w-7xl mx-auto px-4 text-center">
               <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900">Choose Your Plan</h2>
               <div className="w-24 h-1.5 bg-yellow-500 mx-auto mt-4 rounded-full"></div>
               <p className="text-gray-600 mt-4 mb-12 text-lg">
-                Flexible subscriptions for every family's needs. Pause or change anytime.
+                Flexible subscriptions for every family&apos;s needs. Pause or change anytime.
               </p>
               
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -130,7 +133,6 @@ export default function SubscriptionPage() {
 
                     <h3 className="text-2xl font-bold text-gray-800">{plan.name}</h3>
                     
-                    {/* --- CHANGE 1 of 2: 'flex-grow' class has been REMOVED from this line --- */}
                     <p className="text-gray-500 mt-2 mb-6">{plan.description}</p>
 
                     <div>
@@ -147,7 +149,6 @@ export default function SubscriptionPage() {
                       ))}
                     </ul>
 
-                    {/* --- CHANGE 2 of 2: 'mt-auto' class has been ADDED to this line --- */}
                     <p className="text-sm bg-gray-50 p-3 rounded-md mt-auto mb-6">{plan.perfectFor}</p>
 
                     <a href="#" className={`w-full text-center font-bold py-3 px-6 rounded-lg transition-colors ${plan.popular ? 'bg-yellow-500 text-white hover:bg-yellow-600' : 'bg-gray-800 text-white hover:bg-gray-900'}`}>
