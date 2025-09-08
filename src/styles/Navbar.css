@@ -1,0 +1,65 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(to right, #FFA500, #FFFFFF);
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo span {
+  margin-left: 10px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+}
+
+.nav-link {
+  color: #1E3A8A;
+  margin: 0 15px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.nav-link.hovered {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nav-link.hovered[href="#home"] {
+  border-bottom: 2px solid #FFC107;
+}
+
+.nav-link.hovered[href="#farmers-initiatives"] {
+  color: #FFC107;
+}
+
+.nav-link.hovered[href="#about-us"] {
+  text-shadow: 0 0 5px #FFA500;
+}
+
+.nav-link.hovered[href="#download"] {
+  background-color: #FFC107;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.icon-container {
+  display: flex;
+  margin-left: 10px;
+}
+
+.icon-container img:hover {
+  opacity: 0.8;
+}
+
