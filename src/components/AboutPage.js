@@ -113,7 +113,13 @@ export default function AboutPageContent(){
 
   // Motion presets
   const panelVariants = { initial:{opacity:0,y:12}, animate:{opacity:1,y:0,transition:{duration:0.35,ease:'easeOut'}}, exit:{opacity:0,y:-12,transition:{duration:0.25,ease:'easeIn'}} };
-  const visualVariants = { initial:{opacity:0,scale:0.98}, animate:{opacity:1,scale:1,transition:{duration:0.35,ease:'easeOut'}}, exit:{opacity:0,scale:0.98,transition:{duration:0.2,ease:'easeIn'}} };
+  
+  // --- UPDATED: Reversed the 'rotate' values for the opposite direction ---
+  const visualVariants = { 
+    initial:{ opacity: 0, scale: 0.95, rotate: -45 }, 
+    animate:{ opacity: 1, scale: 1, rotate: 0, transition:{ duration: 0.4, ease: 'easeOut' } }, 
+    exit:{ opacity: 0, scale: 0.95, rotate: 45, transition:{ duration: 0.3, ease: 'easeIn' } } 
+  };
 
   return (
     <>

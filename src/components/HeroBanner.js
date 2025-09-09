@@ -82,7 +82,6 @@ export default function HeroBanner() {
         <div className="relative z-10 flex h-full items-center px-4 sm:px-8 lg:px-12">
           <div className="max-w-2xl">
             <h1 className="text-4xl font-extrabold leading-tight text-white drop-shadow-2xl sm:text-5xl lg:text-6xl">
-              {/* SLIGHTLY RESTRUCTURED a bit more concise */}
               <span className={`${agasthyaFont.className} text-amber-400`}>
                 Agasthya Nutro Milk
               </span>
@@ -104,8 +103,9 @@ export default function HeroBanner() {
                 Explore Our Products
               </Link>
 
+              {/* --- UPDATED: Link now points to the correct subscription page --- */}
               <Link
-                href="/milk-subscription"
+                href="/subscription"
                 className="inline-flex items-center justify-center rounded-full border border-white/30 bg-white/15 px-7 py-3 font-semibold text-white shadow-lg backdrop-blur-sm transition transform hover:scale-105 hover:bg-white/25 hover:shadow-xl"
               >
                 Milk Subscription
