@@ -28,7 +28,7 @@ const pillars = [
 export default function WhatWeStandFor() {
   return (
     // --- CHANGED: Switched background to white for consistency ---
-    <section className="bg-white py-16 md:py-24">
+    <section className="bg-white py-2 md:py-5">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900">

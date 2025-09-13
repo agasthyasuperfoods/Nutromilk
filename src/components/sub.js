@@ -106,7 +106,7 @@ export default function SubscriptionPage() {
 
         <main>
           {/* Section 2: How It Works */}
-          <section className="py-8 sm:py-12 bg-white">
+          <section className="py-8 sm:py-8 bg-white">
             <div className="max-w-7xl mx-auto px-4 text-center">
               <h2 className="text-3xl md:text-4xl font-bold text-slate-800">How Delivery Works</h2>
               <p className="text-gray-500 mt-4 mb-10 text-lg">
@@ -138,7 +138,7 @@ export default function SubscriptionPage() {
           </section>
 
           {/* Section 3: Choose Your Plan */}
-          <section id="plans" className="py-8 sm:py-12 bg-white"> 
+          <section id="plans" className="py-3 sm:py-1 bg-white"> 
             <div className="max-w-7xl mx-auto px-4 text-center">
               <h2 className="text-3xl md:text-4xl font-extrabold text-slate-800">Find Your Perfect Milk Plan</h2>
               <div className="w-24 h-1.5 bg-amber-500 mx-auto mt-4 rounded-full"></div>
