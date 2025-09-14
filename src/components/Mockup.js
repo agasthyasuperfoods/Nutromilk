@@ -546,7 +546,7 @@ const flowchartContainerVariants = { hidden: { opacity: 0 }, visible: { opacity:
 const flowchartItemVariants = { hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 110 } } };
 
 /* ---------- Component ---------- */
-export default function ProductShowcase() {
+export default function Mockup() {
   // Refs to measure image wrappers and band container for arrows
   const bandRef = useRef(null);
   const imgRefs = [useRef(null), useRef(null), useRef(null)];
