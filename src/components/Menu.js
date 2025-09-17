@@ -45,8 +45,8 @@ export default function Menu() {
             <Image
               src="/Logo.png"
               alt="Agasthya Logo"
-                width={300}          // wider
-                height={100}          // taller
+                width={300}
+                height={100}
           priority
             className="h-18 w-auto drop-shadow-sm"
             />
@@ -57,24 +57,6 @@ export default function Menu() {
         <div className="hidden md:flex items-end gap-10 ">
           <Link href="/" className={`${baseLink} ${underline} ${isActive("/") ? activeClasses : ""}`}>
             Home
-          </Link>
-
-          {/* Products dropdown */}
-          <div className="relative group">
-            <button className={`${baseLink} ${underline} flex items-center gap-1`}>
-              Products ▾
-            </button>
-            <div className="absolute left-0 mt-2 hidden group-hover:block bg-white border border-gray-200 rounded-lg shadow-lg py-2 w-56 z-50">
-              <Link href="/products/milk" className="block px-4 py-2 text-gray-700 hover:bg-gray-50">Milk</Link>
-              <Link href="/products/seasonalfruits" className="block px-4 py-2 text-gray-700 hover:bg-gray-50">Seasonal Fruits</Link>
-              <Link href="/products/countryeggs" className="block px-4 py-2 text-gray-700 hover:bg-gray-50">Country Eggs</Link>
-              <Link href="/products/vegetables" className="block px-4 py-2 text-gray-700 hover:bg-gray-50">Fresh Vegetables</Link>
-              <Link href="/products/cereals" className="block px-4 py-2 text-gray-700 hover:bg-gray-50">Breakfast cereals</Link>
-            </div>
-          </div>
-
-          <Link href="/farmers" className={`${baseLink} ${underline} ${isActive("/farmers") ? activeClasses : ""}`}>
-            Farmers
           </Link>
           <Link href="/about" className={`${baseLink} ${underline} ${isActive("/about") ? activeClasses : ""}`}>
             About Us
@@ -124,18 +106,10 @@ export default function Menu() {
         <div className="md:hidden border-t border-gray-200 bg-white">
           <div className="px-6 py-4 flex flex-col gap-4">
             <Link href="/" onClick={() => setOpen(false)}>Home</Link>
-            <details>
-              <summary className="cursor-pointer">Products</summary>
-              <div className="flex flex-col ml-4 mt-2 gap-2">
-                <Link href="/products/milk" onClick={() => setOpen(false)}>Milk</Link>
-                <Link href="/products/colostrum" onClick={() => setOpen(false)}>Colostrum Milk Pudding</Link>
-                <Link href="/products/cheese" onClick={() => setOpen(false)}>Cheese</Link>
-                <Link href="/products/vegetables" onClick={() => setOpen(false)}>Fresh Vegetables</Link>
-              </div>
-            </details>
-            <Link href="/farmers" onClick={() => setOpen(false)}>Farmers</Link>
             <Link href="/about" onClick={() => setOpen(false)}>About Us</Link>
             <Link href="/subscription" onClick={() => setOpen(false)}>Subscription</Link>
+            {/* --- UPDATED: href changed to /shipping --- */}
+            <Link href="/shipping" onClick={() => setOpen(false)}>Shipping and Delivery</Link>
             <Link href="/contact" onClick={() => setOpen(false)}>Contact</Link>
 
             <div className="flex items-center gap-3 pt-4">
@@ -152,8 +126,6 @@ export default function Menu() {
     </header>
   );
 }
-
-
 
 // "use client";
 

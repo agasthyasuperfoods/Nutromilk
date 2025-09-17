@@ -106,7 +106,7 @@ export default function Faq() {
   };
 
   return (
-    <section className="bg-white py-20 md:py-28">
+    <section className="bg-white py-10 md:py-10">
       <div className="mx-auto max-w-7xl px-6 md:px-8">
         <div className="text-center">
           <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-neutral-900">
