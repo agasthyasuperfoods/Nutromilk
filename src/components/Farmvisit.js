@@ -324,18 +324,20 @@ export default function Farmvisit() {
               </div>
             </div>
 
-            <div className="rounded-xl overflow-hidden border border-gray-100">
-              <div className="w-full h-48 bg-gray-100">
+           <div className="w-full h-48 bg-gray-100">
+                {/* <-- UPDATED IFRAME SRC: Google Maps 'pb=' embed for Agasthya Farms --> */}
                 <iframe
                   title="Farm preview map"
-                  src="https://www.google.com/maps/d/embed?mid=1opW45gjSSqDnfTHPDfINBICxtc6zewA&ehbc=2E312F"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3578.781696268116!2d78.3993122!3d16.9071725!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bca4d001f658ad3%3A0xdf4b9129dffae66b!2sAgasthya%20farms!5e1!3m2!1sen!2sin!4v1759579024151!5m2!1sen!2sin"
                   width="100%"
                   height="100%"
                   style={{ border: 0, pointerEvents: 'none' }}
+                  allowFullScreen=""
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
                   aria-hidden="true"
                 />
               </div>
-            </div>
 
             <div className="flex flex-col gap-2">
               <a
