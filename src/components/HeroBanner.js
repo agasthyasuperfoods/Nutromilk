@@ -66,7 +66,7 @@ export default function HeroBanner() {
                 Agasthya Nutro Milk
               </span>
               <span className="block mt-1">
-                Freshness You Can Trust, Every Day.
+                Freshness You Can Trust, Every Day
               </span>
             </h1>
 

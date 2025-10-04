@@ -167,7 +167,7 @@ export default function AboutUs() {
 
           <div className="relative w-full rounded-2xl overflow-hidden shadow-lg h-64 md:h-80 lg:h-96">
             <Image
-              src="https://placehold.co/1200x800?text=Agasthya+NutroMilk+Farm"
+              src="./test.png"
               alt="Agasthya NutroMilk farm"
               fill
               sizes="(min-width:1024px) 50vw, 100vw"
