@@ -16,14 +16,14 @@ export default function Map() {
     {
       id: "tandur",
       title: "Agasthya Nutromilk — Tandur",
-      image: "./cow.jpg",
+      image: "/cow.jpg",
       details:
         "Tandur farm — operational unit. Address: Tandur, Telangana. Tandur farm — operational unit. Address: Tandur, Telangana. Tandur farm — operational unit. Address: Tandur, Telangana.",
     },
     {
       id: "talakondapally",
       title: "Agasthya Nutromilk — Talakondapally",
-      image: "./tandur3.jpeg",
+      image: "/tandur3.jpeg",
       details:
         "Talakondapally farm — operational unit. Address: Talakondapally, Telangana. Tandur farm — operational unit. Address: Tandur, Telangana. Tandur farm — operational unit. Address: Tandur, Telangana.",
     },
@@ -41,7 +41,7 @@ export default function Map() {
 
   return (
     <div className="w-full bg-white flex items-start py-8">
-      <div className="mx-auto w-full  px-4">
+      <div className="mx-auto w-full px-4">
         {/* Heading */}
         <header className="mb-6 text-center">
           <h1 className="text-3xl md:text-[50px] font-extrabold tracking-tight text-neutral-900">
@@ -94,21 +94,24 @@ export default function Map() {
 
             {/* RIGHT: Map (non-interactive to preserve page scroll) */}
             <main className="md:w-2/3 w-full p-0 relative flex items-center justify-center">
-              <div className="w-full h-full">
-                <iframe
-                  ref={iframeRef}
-                  title="Agasthya Farms Map"
-                  src="https://www.google.com/maps/d/embed?mid=1opW45gjSSqDnfTHPDfINBICxtc6zewA&ehbc=2E312F"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0, outline: "none", pointerEvents: "none" }}
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  tabIndex={-1}
-                  onLoad={handleIframeLoad}
-                  aria-hidden="true"
-                />
-              </div>
+              <iframe
+            ref={iframeRef}
+            title="Agasthya Farms Map"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3578.781696268116!2d78.3993122!3d16.9071725!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bca4d001f658ad3%3A0xdf4b9129dffae66b!2sAgasthya%20farms!5e1!3m2!1sen!2sin!4v1759579024151!5m2!1sen!2sin"
+            width="100%"
+            height="100%"
+            style={{
+              border: 0,
+              outline: "none",
+              pointerEvents: "none", // keeps scrolling smooth
+            }}
+            allowFullScreen=""
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            tabIndex={-1}
+            onLoad={handleIframeLoad}
+            aria-hidden="true"
+          />
             </main>
           </div>
         </div>
